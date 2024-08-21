@@ -18,5 +18,6 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     min-height: 100vh;
-    /*font-family: "Outfit", system-ui;*/
+    /*font-family: "Outfit", system-ui;
+    font-size: 2rem;*/
 }
