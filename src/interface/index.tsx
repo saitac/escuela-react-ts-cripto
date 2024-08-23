@@ -3,6 +3,12 @@ interface IntMoneda {
     name: string
 }
 
+interface IntCryptoMoneda {
+    code: string,
+    name: string
+}
+
 export {
-    type IntMoneda
+    type IntMoneda,
+    type IntCryptoMoneda
 }

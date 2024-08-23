@@ -1,7 +1,12 @@
 import { Moneda } from "../classes"
 import { monedas } from "../data"
+import { useCriptoStore } from "../stores/useCriptoStore"
 
 const CriptoSearchForm = () => {
+
+    const x = useCriptoStore( (state) => state.CryptoCurrencies );
+    console.log(x);
+
     return(
         <form
             className="flex flex-col gap-5"
