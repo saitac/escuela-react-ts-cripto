@@ -1,12 +1,29 @@
-import { Moneda } from "../classes"
+import { ChangeEvent, useState } from "react";
+import { CryptoMoneda, Moneda, Pair } from "../classes"
 import { monedas } from "../data"
 import { useCriptoStore } from "../stores/useCriptoStore"
 
 const CriptoSearchForm = () => {
 
-    const x = useCriptoStore( (state) => state.CryptoCurrencies );
-    console.log(x);
+    const CryptoCurrencies = useCriptoStore( (state) => state.CryptoCurrencies );
+    const [pair, setpair] = useState<Pair>(new Pair())
 
+    const HandleOnChangeEvent = (e: ChangeEvent<HTMLSelectElement>) => {
+        if (e.target.name === "currency"){
+            //const actualCurrency = new Moneda(e.target.value,"") 
+            //console.log(e.target[e.target.selectedIndex].textContent)
+            setpair({
+                ...pair,
+                moneda: new Moneda(e.target.value,"")
+            })
+        } else {
+            setpair({
+                ...pair,
+                criptoMoneda: new CryptoMoneda(e.target.value,"")
+            })
+        }
+    }
+    
     return(
         <form
             className="flex flex-col gap-5"
@@ -20,6 +37,7 @@ const CriptoSearchForm = () => {
                     className="bg-[#ECEBEB] border-none rounded-2xl px-4 w-full"
                     name="currency"
                     id="currency"
+                    onChange={(e)=>HandleOnChangeEvent(e)}
                 >
                     <option value="">-- Seleccione --</option>
                     {
@@ -36,8 +54,12 @@ const CriptoSearchForm = () => {
                     className="bg-[#ECEBEB] border-none rounded-2xl px-4 w-full"
                     name="criptocurrency"
                     id="criptocurrency"
+                    onChange={(e)=>HandleOnChangeEvent(e)}
                 >
                     <option value="">-- Seleccione --</option>
+                    {
+                        CryptoCurrencies.map( (cripto: CryptoMoneda) => (<option key={cripto.code} value={cripto.name}>{cripto.name}</option>) )
+                    }
                 </select>
             </div>
             <input

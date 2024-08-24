@@ -8,7 +8,13 @@ interface IntCryptoMoneda {
     name: string
 }
 
+interface IntPair {
+    moneda: IntMoneda,
+    criptoMoneda: IntCryptoMoneda
+}
+
 export {
     type IntMoneda,
-    type IntCryptoMoneda
+    type IntCryptoMoneda,
+    type IntPair
 }

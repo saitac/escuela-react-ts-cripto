@@ -1,4 +1,4 @@
-import { IntCryptoMoneda, IntMoneda } from "../interface";
+import { IntCryptoMoneda, IntMoneda, IntPair } from "../interface";
 
 class Moneda implements IntMoneda {
     code: string;
@@ -20,7 +20,18 @@ class CryptoMoneda implements IntCryptoMoneda {
     }
 }
 
+class Pair implements IntPair {
+    moneda: Moneda;
+    criptoMoneda: CryptoMoneda;
+
+    constructor(moneda: Moneda = new Moneda("",""), criptoMoneda: CryptoMoneda = new CryptoMoneda("","")) {
+        this.moneda = moneda;
+        this.criptoMoneda = criptoMoneda
+    }
+}
+
 export {
     Moneda,
-    CryptoMoneda
+    CryptoMoneda,
+    Pair
 }
