@@ -10,8 +10,16 @@ const CryptoCurrencyResponseSchema = z.object({
 
 const CryptoCurrenciesResponseSchema = z.array(CryptoCurrencyResponseSchema);
 
+const CryptoCompareResponseSchema = z.object({
+    IMAGEURL: z.string(),
+    PRICE: z.string(),
+    HIGHDAY: z.string(),
+    LOWDAY: z.string()
+});
+
 
 export {
     CryptoCurrencyResponseSchema,
-    CryptoCurrenciesResponseSchema
+    CryptoCurrenciesResponseSchema,
+    CryptoCompareResponseSchema
 }

@@ -1,12 +1,15 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { CryptoMoneda, Moneda, Pair } from "../classes"
 import { monedas } from "../data"
 import { useCriptoStore } from "../stores/useCriptoStore"
+import ErrorMessage from "./ErrorMessage";
 
 const CriptoSearchForm = () => {
 
     const CryptoCurrencies = useCriptoStore( (state) => state.CryptoCurrencies );
+    const getData = useCriptoStore( (state) => state.getData );
     const [pair, setpair] = useState<Pair>(new Pair())
+    const [error, setError] = useState("");
 
     const HandleOnChangeEvent = (e: ChangeEvent<HTMLSelectElement>) => {
         if (e.target.name === "currency"){
@@ -23,11 +26,23 @@ const CriptoSearchForm = () => {
             })
         }
     }
+
+    const HandleOnSubmit = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        if ( !pair.moneda.code || !pair.criptoMoneda.code ) {
+            setError("Todos los campos son obligatorios");
+            return;
+        }
+        setError("");
+        getData(pair);
+    }
     
     return(
         <form
             className="flex flex-col gap-5"
+            onSubmit={(e)=>HandleOnSubmit(e)}
         >
+            {error && <ErrorMessage>{error}</ErrorMessage>}
             <div>
                 <label
                     className="text-black block font-"
@@ -58,7 +73,7 @@ const CriptoSearchForm = () => {
                 >
                     <option value="">-- Seleccione --</option>
                     {
-                        CryptoCurrencies.map( (cripto: CryptoMoneda) => (<option key={cripto.code} value={cripto.name}>{cripto.name}</option>) )
+                        CryptoCurrencies.map( (cripto: CryptoMoneda) => (<option key={cripto.code} value={cripto.code}>{cripto.name}</option>) )
                     }
                 </select>
             </div>

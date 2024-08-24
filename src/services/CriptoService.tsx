@@ -1,5 +1,5 @@
 import axios from "axios"
-import { CryptoMoneda } from "../classes";
+import { CryptoMoneda, Pair } from "../classes";
 import { CryptoCurrenciesResponseSchema } from "../schema/cripto-schema";
 
 const getCryptos = async (): Promise<CryptoMoneda[]> => {
@@ -21,9 +21,19 @@ const getCryptos = async (): Promise<CryptoMoneda[]> => {
     } finally {
         return cryptos;
     }
+}
 
+const getData = async (pair: Pair) => {
+    const uri: string = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${pair.criptoMoneda.code}&tsyms=${pair.moneda.code}`;
+    try {
+        const {data: {DISPLAY}} = await axios.get(uri);
+        console.log(DISPLAY[pair.criptoMoneda.code][pair.moneda.code]);
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 export {
-    getCryptos
+    getCryptos,
+    getData
 }
