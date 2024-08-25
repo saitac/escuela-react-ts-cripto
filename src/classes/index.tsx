@@ -1,4 +1,4 @@
-import { IntCryptoMoneda, IntMoneda, IntPair } from "../interface";
+import { IntCryptoCompare, IntCryptoMoneda, IntMoneda, IntPair } from "../interface";
 
 class Moneda implements IntMoneda {
     code: string;
@@ -30,8 +30,31 @@ class Pair implements IntPair {
     }
 }
 
+class CryptoCompare implements IntCryptoCompare {
+    pair: IntPair;
+    imageurl: string;
+    price: string;
+    highday: string;
+    lowday: string;
+    lastupdate: string;
+    changepct24hour: string;
+
+    constructor(pair: Pair = new Pair(), imageurl: string = "", price: string = "", highday: string = "",
+    lowday: string = "", lastupdate: string = "", changepct24hour: string = ""){
+
+        this.pair = pair;
+        this.imageurl = imageurl;
+        this.price = price;
+        this.highday = highday;
+        this.lowday = lowday;
+        this.lastupdate = lastupdate;
+        this.changepct24hour = changepct24hour
+    }
+}
+
 export {
     Moneda,
     CryptoMoneda,
-    Pair
+    Pair,
+    CryptoCompare
 }

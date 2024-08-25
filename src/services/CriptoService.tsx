@@ -1,6 +1,6 @@
 import axios from "axios"
-import { CryptoMoneda, Pair } from "../classes";
-import { CryptoCurrenciesResponseSchema } from "../schema/cripto-schema";
+import { CryptoCompare, CryptoMoneda, Pair } from "../classes";
+import { CryptoCompareResponseSchema, CryptoCurrenciesResponseSchema } from "../schema/cripto-schema";
 
 const getCryptos = async (): Promise<CryptoMoneda[]> => {
     
@@ -23,13 +23,27 @@ const getCryptos = async (): Promise<CryptoMoneda[]> => {
     }
 }
 
-const getData = async (pair: Pair) => {
+const getData = async (pair: Pair): Promise<CryptoCompare> => {
+    let cryptoCompare: CryptoCompare = new CryptoCompare();
     const uri: string = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${pair.criptoMoneda.code}&tsyms=${pair.moneda.code}`;
     try {
+        cryptoCompare.pair = pair;
         const {data: {DISPLAY}} = await axios.get(uri);
-        console.log(DISPLAY[pair.criptoMoneda.code][pair.moneda.code]);
+        const result = CryptoCompareResponseSchema.safeParse(DISPLAY[pair.criptoMoneda.code][pair.moneda.code]);
+        if (result.success) {
+            cryptoCompare = {
+                ...cryptoCompare,
+                imageurl: result.data.IMAGEURL,
+                price: result.data.PRICE,
+                highday: result.data.HIGHDAY,
+                lowday: result.data.LOWDAY,
+                lastupdate: result.data.LASTUPDATE
+            }            
+        }
     } catch (error) {
         console.log(error);
+    } finally {
+        return cryptoCompare;
     }
 }
 

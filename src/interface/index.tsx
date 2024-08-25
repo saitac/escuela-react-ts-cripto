@@ -13,8 +13,19 @@ interface IntPair {
     criptoMoneda: IntCryptoMoneda
 }
 
+interface IntCryptoCompare {
+    pair: IntPair,
+    imageurl: string,
+    price: string,
+    highday: string,
+    lowday: string,
+    lastupdate: string,
+    changepct24hour: string
+}
+
 export {
     type IntMoneda,
     type IntCryptoMoneda,
-    type IntPair
+    type IntPair,
+    type IntCryptoCompare
 }

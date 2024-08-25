@@ -14,7 +14,9 @@ const CryptoCompareResponseSchema = z.object({
     IMAGEURL: z.string(),
     PRICE: z.string(),
     HIGHDAY: z.string(),
-    LOWDAY: z.string()
+    LOWDAY: z.string(),
+    CHANGEPCT24HOUR: z.string(),
+    LASTUPDATE: z.string()
 });
 
 

@@ -1,11 +1,12 @@
 import { create } from "zustand"
 import { devtools } from "zustand/middleware";
-import { CryptoMoneda, Pair } from "../classes";
+import { CryptoCompare, CryptoMoneda, Pair } from "../classes";
 import { getCryptos, getData } from "../services/CriptoService"
 
 
 type CriptoState = {
     CryptoCurrencies: CryptoMoneda[],
+    CryptoCompare: CryptoCompare,
     getCryptos: () => Promise<void>,
     getData: (pair: Pair) => Promise<void>
 
@@ -14,16 +15,16 @@ type CriptoState = {
 const useCriptoStore = create<CriptoState>()(devtools((set) => ({
 
     CryptoCurrencies: [],
+    CryptoCompare: new CryptoCompare(new Pair()),
         
     getCryptos: async () => {
         const CryptoCurrencies: CryptoMoneda[] = await getCryptos();
-        set(() => ({CryptoCurrencies}));
+        set((state) => ({...state, CryptoCurrencies}));
     },
 
     getData: async (pair: Pair) => {
-
-        await getData(pair)
-
+        const CryptoCompare: CryptoCompare = await getData(pair);
+        set((state)=>({...state, CryptoCompare}));
     }
 
 })));
