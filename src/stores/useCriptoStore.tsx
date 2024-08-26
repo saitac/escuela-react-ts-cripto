@@ -7,8 +7,10 @@ import { getCryptos, getData } from "../services/CriptoService"
 type CriptoState = {
     CryptoCurrencies: CryptoMoneda[],
     CryptoCompare: CryptoCompare,
+    loading: boolean,
     getCryptos: () => Promise<void>,
-    getData: (pair: Pair) => Promise<void>
+    getData: (pair: Pair) => Promise<void>,
+    clearCompare: () => void
 
 }
 
@@ -16,6 +18,7 @@ const useCriptoStore = create<CriptoState>()(devtools((set) => ({
 
     CryptoCurrencies: [],
     CryptoCompare: new CryptoCompare(new Pair()),
+    loading: false,
         
     getCryptos: async () => {
         const CryptoCurrencies: CryptoMoneda[] = await getCryptos();
@@ -23,8 +26,13 @@ const useCriptoStore = create<CriptoState>()(devtools((set) => ({
     },
 
     getData: async (pair: Pair) => {
+        set(()=>({loading: true}));
         const CryptoCompare: CryptoCompare = await getData(pair);
-        set((state)=>({...state, CryptoCompare}));
+        set((state)=>({...state, CryptoCompare, loading: false}));
+    },
+
+    clearCompare: () => {
+        set((state)=>({...state, CryptoCompare: new CryptoCompare(new Pair())}));
     }
 
 })));

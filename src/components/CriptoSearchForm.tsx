@@ -7,11 +7,15 @@ import ErrorMessage from "./ErrorMessage";
 const CriptoSearchForm = () => {
 
     const CryptoCurrencies = useCriptoStore( (state) => state.CryptoCurrencies );
+    const clearCompare = useCriptoStore( (state) => state.clearCompare )
     const getData = useCriptoStore( (state) => state.getData );
     const [pair, setpair] = useState<Pair>(new Pair())
     const [error, setError] = useState("");
 
     const HandleOnChangeEvent = (e: ChangeEvent<HTMLSelectElement>) => {
+
+        clearCompare();
+
         if (e.target.name === "currency"){
             //const actualCurrency = new Moneda(e.target.value,"") 
             //console.log(e.target[e.target.selectedIndex].textContent)

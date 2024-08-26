@@ -13,7 +13,7 @@ function App() {
     <div
       className="m-0 flex justify-center"
     >
-      <div className="">
+      <div className="min-w-[512px] max-w-lg">
         <h1
           className="text-4xl my-10 text-white text-center"
         >
